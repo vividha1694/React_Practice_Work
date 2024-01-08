@@ -1,28 +1,25 @@
 import React, { useContext } from 'react'
 import styles from '../Styles/MainHeader.module.css'
 import Navigation from './Navigation'
-import { UserContext } from '../App'
+import AuthContext from '../Context/auth-context'
 
 
-function MainHeader() {
- 
-  const isLoggedIn = useContext(UserContext);
-  const onLogout = useContext(UserContext);
+function MainHeader(props) {
+   
+   const authContext = useContext(AuthContext);
+
   return (
-    <header className={styles["main-header"]}>
+   <AuthContext.Consumer>{(ctx)=>{
+    return (
+      <header className={styles["main-header"]}>
         <h1>Header</h1>
-        {isLoggedIn && <Navigation value={onLogout} /> }
+        {ctx.isLoggedIn && <Navigation/> } {/*if login then draw navigation*/}
     </header>
+    )
+   }}
+    </AuthContext.Consumer>
+    
   )
-}
-
- 
-  {/*return (
-    <header className={styles["main-header"]}>
-        <h1>Header</h1>
-        {props.isLoggedIn && <Navigation onLogout={props.onLogout} /> } {/*if login then draw navigation
-    </header>
-  )
-}*/}
+} 
 
 export default MainHeader

@@ -1,7 +1,8 @@
-import React, { useState,useReducer } from 'react'
+import React, { useState,useReducer,useEffect,useContext } from 'react'
 import Card from './Card'
 import classes from '../Styles/Login.module.css'
 import Button from './Button'
+import AuthContext from '../Context/auth-context'
 
 const emailReducer = (state, action) => {
   if(action.type === 'USER_INPUT'){
@@ -26,6 +27,7 @@ const passwordReducer = (state, action) => {
 } ;
 
 function Login(props) {
+  const authContext = useContext(AuthContext);
 
   const [enteredEmail,setEnteredEamil] = useState("");// to save input
   const [emailIsValid,setEmailIsValid] = useState("");// to check valid
@@ -43,41 +45,40 @@ function Login(props) {
     value: '', isValid: null
   });
 
- {/*} useEffect=(()=> {
+  useEffect(()=> {
     console.log('useEffect');
 
     const timer = setTimeout(() => {
       console.log('Inside Timeout');
       setFormIsValid(
-        enteredEmail.includes("@") && enteredPassword.trim().length > 7
-     )
+        emailState.isValid && passwordState.isValid);
      }, 500);
     
      return ()=> {
       console.log('CLEAN UP')
       clearTimeout(timer);
      };
-    }, [enteredEmail, enteredPassword]);*/}
+    }, [emailState, passwordState]);
   
   
  const emailChangeHandler = (event) => { // to save whatever we type
      //setEnteredEamil(event.target.value);
      dispatchEmail({type:'USER_INPUT',val: event.target.value});
-     console.log("emailChangeHandler", event.target.value);
+    // console.log("emailChangeHandler", event.target.value);
 
-     setFormIsValid( // for btn able/disable
-     event.target.value.includes("@") && passwordState.value.trim().length > 7
-     )
+    setFormIsValid( // for btn able/disable
+    event.target.value.includes("@") && passwordState.value.trim().length > 7
+    )
  };
 
  const passwordChangeHandler = (event) => {
   //setEnteredPassword(event.target.value);
   dispatchPassword({type:'USER_INPUT',val: event.target.value});
-  console.log("passwordChangeHandler", event.target.value);
+ // console.log("passwordChangeHandler", event.target.value);
 
-     setFormIsValid( // for btn able/disable
-     emailState.value.includes("@") && event.target.value.trim().length > 7
-     )
+    //  setFormIsValid( // for btn able/disable
+    //  emailState.value.includes("@") && event.target.value.trim().length > 7
+    //  )
  }
   
  const validateEmailHandler =() => {
@@ -95,7 +96,7 @@ function Login(props) {
 
  const submitHandler =(event) => {
   event.preventDefault();
-  props.onLogin(emailState.value, enteredPassword);
+  authContext.onLogin(emailState.value, passwordState.value);
  };
 
   return (
