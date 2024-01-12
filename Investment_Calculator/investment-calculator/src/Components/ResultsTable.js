@@ -21,10 +21,10 @@ function ResultsTable({yearlyData}) {
         {yearlyData.map((yearlyInfo) => (
             <tr key={yearlyData.year}>
             <td>{yearlyInfo.year}</td>
-            <td>${yearlyInfo.savingsEndOfYear}</td>
-            <td>${yearlyInfo.yearlyInterest}</td>
-            <td>${yearlyInfo.totalInterest}</td>
-            <td>${yearlyInfo.totalInvestedCapital}</td>
+            <td>${yearlyInfo.savingsEndOfYear.toFixed(2)}</td>
+            <td>${yearlyInfo.yearlyInterest.toFixed(2)}</td>
+            <td>${(yearlyInfo.savingsEndOfYear - 10000 - yearlyInfo.yearlyContribution * yearlyInfo.year).toFixed(2) }</td>
+            <td>${(10000 +yearlyInfo.yearlyContribution* yearlyInfo.year).toFixed(2)}</td>
           </tr>
         ))}
         </tbody>

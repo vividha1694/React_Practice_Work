@@ -8,6 +8,7 @@ function App() {
 
   const [yearlyData, setYearlyData] = useState([]);
 
+
   const calculateHandler = (userInput) => {
     const yearlyData = [];
 
@@ -16,37 +17,25 @@ function App() {
     const expectedReturn = +userInput["expected-return"] / 100;
     const duration = +userInput["duration"];
 
-    let totalInterest = 0;
-    let totalInvestedCapital =0;
-
     for (let i = 0; i < duration; i++) {
       const yearlyInterest = currentSavings * expectedReturn;
       currentSavings += yearlyInterest + yearlyContribution;
-     
-      totalInterest += yearlyInterest;
-      totalInvestedCapital += yearlyContribution;
 
       
       yearlyData.push({
         year: i + 1,
-        yearlyInterest: yearlyInterest.toFixed(2),
-        savingsEndOfYear: currentSavings.toFixed(2),
-        yearlyContribution: yearlyContribution.toFixed(2),
-        totalInterest : totalInterest.toFixed(2),
-        totalInvestedCapital :  totalInvestedCapital.toFixed(2),
+        yearlyInterest: yearlyInterest,
+        savingsEndOfYear: currentSavings,
+        yearlyContribution: yearlyContribution,
       });
     }
     setYearlyData(yearlyData);
   };
-  const handleReset = () => {
-    setYearlyData([]);
-  };
-
 
   return (
     <>
       <Header />
-      <UserInput onCalculate={calculateHandler} yearlyData={handleReset}/>
+      <UserInput onCalculate={calculateHandler} />
       {yearlyData.length > 0 ? (
         <ResultsTable
           yearlyData={yearlyData}/>

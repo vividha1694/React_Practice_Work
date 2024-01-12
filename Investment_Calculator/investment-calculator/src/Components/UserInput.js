@@ -36,7 +36,6 @@ function UserInput({onCalculate}) {
               }}
             />
           </p>
-          a
           <p>
             <label htmlFor="yearly-contribution">Yearly Savings ($)</label>
             <input
